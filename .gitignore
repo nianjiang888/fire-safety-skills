@@ -1,0 +1,26 @@
+# 发布打包产物：仓库只维护源码与文档，zip 由 pack_skill.py 随时重建
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.venv/
+env/
+*.egg-info/
+
+# 编辑器与系统
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时输出
+tmp/
+temp/
+*.log
+*.tmp

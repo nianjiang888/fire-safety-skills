@@ -1,0 +1,16 @@
+# 统一换行符为 LF。
+# FIre 引擎以 newline="\n" 写报告，CRLF 会破坏"同一输入逐字节复现"的可验证性。
+* text=auto eol=lf
+
+# 明确标记为文本的常见类型
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.txt  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# 二进制（发布包已由 .gitignore 排除，此处兜底）
+*.zip  binary
+*.png  binary
+*.pdf  binary

@@ -1,0 +1,234 @@
+{
+  "skill": "check-fire-compliance",
+  "title": "消防合规体检（主动 Agent 版）",
+  "version": "1.0.1",
+  "description": "对照消防法规基线，主动发现单位消防安全管理中的合规缺口与违规红线，输出分级报告与可执行的下一步。",
+  "profiles": {
+    "general": {"label": "一般单位"},
+    "key_unit": {"label": "消防安全重点单位"},
+    "assembly": {"label": "人员密集场所"},
+    "high_risk": {"label": "火灾高危单位"}
+  },
+  "rules": [
+    {
+      "id": "R-RES-01", "dimension": "消防安全责任", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(一)；公安部61号令第四条、第六条", "citation_code": "消防法;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["消防安全责任人", "明确.*责任(人|主体)", "责任人对本单位消防"]},
+      "evidence_text": "材料显示已明确消防安全责任主体，符合法定责任制要求。",
+      "gap_text": "未在材料中找到消防安全责任人明确的证据。依据消防法第十六条，单位应落实消防安全责任制，明确消防安全责任人（法定代表人或主要负责人）。",
+      "action": "以正式文件明确法定代表人/主要负责人为消防安全责任人，并公示其职责。"
+    },
+    {
+      "id": "R-RES-02", "dimension": "消防安全责任", "severity": "high", "type": "gap", "applies": ["key_unit", "assembly", "high_risk"],
+      "citation": "消防法第十七条(一)；公安部61号令第七条；国办发87号第四章", "citation_code": "消防法;公安部61号令;国办发87号",
+      "detect": {"kind": "regex", "patterns": ["消防安全管理人"]},
+      "evidence_text": "材料显示已确定消防安全管理人，符合重点单位/人密场所管理要求。",
+      "gap_text": "未找到消防安全管理人明确的证据。消防法第十七条要求重点单位确定消防安全管理人；人员密集场所亦建议设管理人。",
+      "action": "确定消防安全管理人（建议具备注册消防工程师执业资格），并以文件任命。"
+    },
+    {
+      "id": "R-RES-03", "dimension": "消防安全责任", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "公安部61号令第五条", "citation_code": "公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["逐级.*责任制", "岗位.*责任制", "逐级消防安全"]},
+      "evidence_text": "材料体现已建立逐级/岗位消防安全责任制。",
+      "gap_text": "未找到逐级、岗位消防安全责任制的证据。公安部61号令要求落实逐级和岗位消防安全责任制。",
+      "action": "制定逐级消防安全责任制，明确各层级、各岗位消防安全职责并签订责任书。"
+    },
+    {
+      "id": "R-RES-04", "dimension": "消防安全责任", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(一)；公安部61号令第十八条", "citation_code": "消防法;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["消防安全制度", "保障消防安全的操作规程", "消防安全操作规程"]},
+      "evidence_text": "材料显示已建立消防安全制度与操作规程。",
+      "gap_text": "未找到消防安全管理制度与保障消防安全的操作规程的证据。消防法第十六条规定单位应制定消防安全制度和操作规程。",
+      "action": "建立涵盖防火巡查、动火管理、用电安全、消防设施维护等内容的制度与操作规程并公布执行。"
+    },
+    {
+      "id": "R-RES-05", "dimension": "消防安全责任", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(一)；公安部61号令第七条(七)；GB/T 38315-2019", "citation_code": "消防法;公安部61号令;GB38315",
+      "detect": {"kind": "regex", "patterns": ["灭火.*预案", "应急疏散预案", "灭火和应急疏散预案"]},
+      "evidence_text": "材料显示已制定灭火和应急疏散预案。",
+      "gap_text": "未找到灭火和应急疏散预案的证据。消防法第十六条要求制定灭火和应急疏散预案，可参照 GB/T 38315-2019 编制。",
+      "action": "按 GB/T 38315-2019 编制预案，明确组织机构、报警、扑救、疏散程序，并定期演练更新。"
+    },
+    {
+      "id": "R-RES-06", "dimension": "消防安全责任", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "公安部61号令第八条；GB/T 40248-2021 5.2.8", "citation_code": "公安部61号令;GB40248",
+      "detect": {"kind": "regex", "patterns": ["消防档案"]},
+      "evidence_text": "材料显示已建立消防档案。",
+      "gap_text": "未找到消防档案管理的证据。公安部61号令要求建立消防档案，人密场所亦将其列为职责。",
+      "action": "建立消防档案，归档基本情况（合法证明、设施图）与动态管理记录（巡查、检测、演练、隐患整改）。"
+    },
+
+    {
+      "id": "R-FAC-01", "dimension": "消防设施", "severity": "redline", "type": "violation", "applies": ["all"],
+      "citation": "消防法第二十八条、第六十条；GB 55036-2022", "citation_code": "消防法;GB55036",
+      "detect": {"kind": "regex", "patterns": ["停用.*消防", "挪用.*消防(设施|器材)", "遮挡.*消火栓", "拆除.*消防设施", "擅自关停.*消防", "消防设施.*停用"]},
+      "hit_text": "材料提到消防设施被停用、挪用、遮挡或拆除，属消防法明令禁止情形，属红线。",
+      "action": "立即恢复消防设施完好有效状态，撤除遮挡/挪用。该行为可处五千至五万元罚款。"
+    },
+    {
+      "id": "R-FAC-02", "dimension": "消防设施", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(三)；GB 25201-2010 第7章", "citation_code": "消防法;GB25201",
+      "detect": {"kind": "regex", "patterns": ["每年.*检测", "年度检测", "全面检测", "每年至少一次.*检测"]},
+      "evidence_text": "材料显示已按要求开展建筑消防设施年度检测。",
+      "gap_text": "未找到建筑消防设施年度全面检测的证据。消防法第十六条要求每年至少一次全面检测，重点单位须将年度检测记录报消防机构备案（GB 25201）。",
+      "action": "委托有资质机构每年对建筑消防设施全面检测一次，出具报告并存档，重点单位年底报消防机构备案。"
+    },
+    {
+      "id": "R-FAC-03", "dimension": "消防设施", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(二)；GB 25201-2010 第9章", "citation_code": "消防法;GB25201",
+      "detect": {"kind": "regex", "patterns": ["维护保养", "维保", "维修保养", "消防设施.*维护"]},
+      "evidence_text": "材料显示已建立消防设施维护保养机制。",
+      "gap_text": "未找到消防设施维护保养制度或记录的证据。消防法要求定期组织检验、维修确保完好有效；GB 25201 规定保养计划与记录。",
+      "action": "制定维护保养计划，明确保养内容、周期与责任人，留存维护保养记录（存档不少于5年）。"
+    },
+    {
+      "id": "R-FAC-04", "dimension": "消防设施", "severity": "redline", "type": "violation", "applies": ["all"],
+      "citation": "公安部61号令第三十一条(六)；GB 25201-2010 5.2", "citation_code": "公安部61号令;GB25201",
+      "detect": {"kind": "regex", "patterns": ["消控室.*脱岗", "控制室.*无人", "无人值班", "控制室停用", "消控室.*停用", "值班人员脱岗"]},
+      "hit_text": "材料提到消防控制室无人值守或脱岗，属红线。消防控制室须24小时专人值班。",
+      "action": "立即恢复消防控制室24小时专人值班、每班不少于2人且持证；脱岗行为依法追责。"
+    },
+    {
+      "id": "R-FAC-05", "dimension": "消防设施", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "GB 25201-2010 5.2；公安部61号令第三十八条", "citation_code": "GB25201;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["24小时值班", "双人值班", "持证上岗", "控制室值班", "消控室.*值班"]},
+      "evidence_text": "材料显示消防控制室已落实24小时值班与持证要求。",
+      "gap_text": "未找到消防控制室24小时值班、每班不少于2人且持证上岗的证据。GB 25201 要求消控室每日24h值班、每班不少于2人。",
+      "action": "落实消防控制室24小时值班制度，每班不少于2人，值班人员持消防设施操作员证上岗。"
+    },
+
+    {
+      "id": "R-EVA-01", "dimension": "疏散逃生", "severity": "redline", "type": "violation", "applies": ["all"],
+      "citation": "消防法第二十八条、第六十条(三)", "citation_code": "消防法",
+      "detect": {"kind": "regex", "patterns": ["占用.*疏散通道", "堵塞.*安全出口", "锁闭.*安全出口", "疏散通道.*堵塞", "安全出口.*锁闭", "封堵.*疏散"]},
+      "hit_text": "材料提到疏散通道、安全出口被占用、堵塞或锁闭，属消防法明令禁止的红线行为。",
+      "action": "立即清除占用物、恢复通道与出口畅通，解除锁闭。该行为可处五千至五万元罚款。"
+    },
+    {
+      "id": "R-EVA-02", "dimension": "疏散逃生", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(四)；公安部61号令第二十一条", "citation_code": "消防法;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["应急照明", "疏散指示标志", "疏散指示"]},
+      "evidence_text": "材料显示已配置并维护应急照明与疏散指示标志。",
+      "gap_text": "未找到应急照明、疏散指示标志配置与完好的证据。消防法要求保障疏散设施处于正常状态。",
+      "action": "确保疏散指示标志、应急照明完好有效，定期测试，损坏立即更换。"
+    },
+    {
+      "id": "R-EVA-03", "dimension": "疏散逃生", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(四)、第二十八条", "citation_code": "消防法",
+      "detect": {"kind": "regex", "patterns": ["消防车通道", "消防车道"]},
+      "evidence_text": "材料显示已保障消防车通道畅通。",
+      "gap_text": "未找到消防车通道管理的证据。消防法要求保障消防车通道畅通、不得占用。",
+      "action": "施划消防车通道标线，设置禁停标识，严禁占用、堵塞消防车通道。"
+    },
+
+    {
+      "id": "R-INS-01", "dimension": "防火巡查检查", "severity": "high", "type": "gap", "applies": ["key_unit", "assembly", "high_risk"],
+      "citation": "公安部61号令第二十五条；消防法第十七条(三)", "citation_code": "公安部61号令;消防法",
+      "detect": {"kind": "regex", "patterns": ["每日.*巡查", "防火巡查.*记录", "每日防火巡查", "每日防火"]},
+      "evidence_text": "材料显示已按要求开展每日防火巡查并留存记录。",
+      "gap_text": "未找到每日防火巡查及记录的证据。公安部61号令要求重点单位、人密场所进行每日防火巡查并填记录。",
+      "action": "建立每日防火巡查制度（公众聚集场所营业期间每2小时一次），填写巡查记录并签字。"
+    },
+    {
+      "id": "R-INS-02", "dimension": "防火巡查检查", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "公安部61号令第二十六条", "citation_code": "公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["防火检查", "月度检查", "季度检查", "每月.*检查", "定期.*检查"]},
+      "evidence_text": "材料显示已开展定期防火检查。",
+      "gap_text": "未找到定期防火检查的证据。公安部61号令要求机关团体事业单位至少每季度、其他单位至少每月一次防火检查。",
+      "action": "建立定期防火检查制度（一般单位每月、重点单位可加密），覆盖疏散、设施、用火用电等并填记录。"
+    },
+    {
+      "id": "R-INS-03", "dimension": "防火巡查检查", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "公安部61号令第三十条至第三十三条", "citation_code": "公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["隐患.*整改", "整改.*闭环", "整改.*记录", "火灾隐患.*消除"]},
+      "evidence_text": "材料显示已建立火灾隐患整改闭环机制。",
+      "gap_text": "未找到火灾隐患整改闭环的证据。公安部61号令要求及时消除隐患、记录整改情况。",
+      "action": "建立隐患台账，明确整改责任、措施、期限，整改完成签字确认归档，重大隐患未改前落实防范措施。"
+    },
+
+    {
+      "id": "R-TRA-01", "dimension": "培训演练", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十七条(四)；公安部61号令第三十六条", "citation_code": "消防法;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["消防.*培训", "消防安全培训", "员工.*培训", "安全(培训|教育)"]},
+      "evidence_text": "材料显示已开展员工消防安全培训。",
+      "gap_text": "未找到员工消防安全培训的证据。消防法要求重点单位对职工进行岗前及定期消防培训。",
+      "action": "制定年度培训计划，重点单位员工每年至少一次、公众聚集场所每半年一次，新员工岗前必训。"
+    },
+    {
+      "id": "R-TRA-02", "dimension": "培训演练", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "消防法第十六条(六)；公安部61号令第七条(七)", "citation_code": "消防法;公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["消防演练", "应急演练", "疏散演练", "灭火演练"]},
+      "evidence_text": "材料显示已组织消防/应急疏散演练。",
+      "gap_text": "未找到灭火和应急疏散演练的证据。消防法要求组织有针对性的消防演练。",
+      "action": "制定演练计划，重点单位每半年、其他单位每年至少一次灭火和应急疏散演练，留存记录并复盘。"
+    },
+    {
+      "id": "R-TRA-03", "dimension": "培训演练", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "公安部61号令第三十六条", "citation_code": "公安部61号令",
+      "detect": {"kind": "regex", "patterns": ["岗前.*培训", "上岗前.*培训", "新上岗.*培训"]},
+      "evidence_text": "材料显示已开展岗前消防安全培训。",
+      "gap_text": "未找到新上岗/新岗位员工岗前消防培训的证据。公安部61号令要求组织新上岗员工岗前培训。",
+      "action": "将岗前消防培训纳入入职流程，考核合格后方可上岗。"
+    },
+
+    {
+      "id": "R-EXT-01", "dimension": "灭火器", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "GB 50140-2005 5.1.1、6.1.1、6.1.2、6.2", "citation_code": "GB50140",
+      "detect": {"kind": "regex", "patterns": ["灭火器.*配置", "配置.*灭火器", "灭火级别", "灭火器.*具", "灭火器.*设置"]},
+      "evidence_text": "材料显示已按规范配置灭火器。",
+      "gap_text": "未找到灭火器按规范配置的证据。GB 50140 要求一个计算单元不少于2具、每点不宜多于5具，并设于明显便于取用处且不影响疏散。",
+      "action": "按 GB 50140 测算配置：依火灾种类与危险等级确定级别与数量，每单元≥2具、每点≤5具，位置明显易取。"
+    },
+    {
+      "id": "R-EXT-02", "dimension": "灭火器", "severity": "high", "type": "gap", "applies": ["all"],
+      "citation": "GB 55036-2022 10.0.7、10.0.8", "citation_code": "GB55036",
+      "detect": {"kind": "regex", "patterns": ["灭火器.*维修", "灭火器.*报废", "月检.*灭火器", "灭火器.*保养", "灭火器.*维护"]},
+      "evidence_text": "材料显示已落实灭火器定期维护、维修与报废。",
+      "gap_text": "未找到灭火器定期维护/维修/报废的证据。GB 55036 第10.0.7条要求灭火器定期维护、维修和报废；干粉报废年限10年、二氧化碳12年、水基型6年。",
+      "action": "建立灭火器月度检查与定期维修报废机制，按 GB 55036 判定报废（干粉10年/CO₂12年/水基6年），建档管理。"
+    },
+    {
+      "id": "R-EXT-03", "dimension": "灭火器", "severity": "redline", "type": "violation", "applies": ["all"],
+      "citation": "GB 50140-2005 5.1.1、6.1.2", "citation_code": "GB50140",
+      "detect": {"kind": "regex", "patterns": ["灭火器.*阻挡", "灭火器.*遮挡", "灭火器.*超过5具", "灭火器.*被挡", "灭火器.*被占"]},
+      "hit_text": "材料提到灭火器被阻挡、遮挡或超过每点5具上限，影响取用，属红线。",
+      "action": "立即清除灭火器周边遮挡物，确保每个设置点不超过5具且取用无阻。"
+    },
+
+    {
+      "id": "R-MFS-01", "dimension": "微型消防站与队伍", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "国办发87号第十五条、第十六条；公消〔2015〕301号；消防〔2025〕33号", "citation_code": "国办发87号;公消301号;消防33号",
+      "detect": {"kind": "regex", "patterns": ["微型消防站"]},
+      "evidence_text": "材料显示已建设微型消防站。",
+      "gap_text": "未找到微型消防站建设的证据。国办发87号鼓励重点单位建立微型消防站；火灾高危单位须建。可参照公消〔2015〕301号/消防〔2025〕33号建设。",
+      "action": "重点单位/高危单位建设微型消防站（人员不少于6人、3分钟到场）；其他单位可参照消防〔2025〕33号建立。"
+    },
+    {
+      "id": "R-MFS-02", "dimension": "微型消防站与队伍", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "消防法第四十一条；GB/T 40248-2021 6.3、6.4", "citation_code": "消防法;GB40248",
+      "detect": {"kind": "regex", "patterns": ["志愿消防队", "专职消防队"]},
+      "evidence_text": "材料显示已建立志愿/专职消防队伍。",
+      "gap_text": "未找到志愿/专职消防队伍的证据。消防法鼓励建立志愿消防队；人密场所志愿队员不少于从业人员30%。",
+      "action": "组建志愿消防队（人密场所不少于从业人员30%），明确职责并定期训练，纳入初起火灾扑救与疏散引导。"
+    },
+
+    {
+      "id": "R-IOT-01", "dimension": "远程监控与技防", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "GB/T 26875.10-2026；国办发87号宣贯（高危单位技防）", "citation_code": "GB26875.10;国办发87号",
+      "detect": {"kind": "regex", "patterns": ["远程监控", "物联网", "智慧消防", "电气火灾监测", "消防设施信息.*采集", "动态监管"]},
+      "evidence_text": "材料显示已应用消防远程监控/物联网等技防手段。",
+      "gap_text": "未找到消防远程监控/物联网技防应用的证据。GB/T 26875.10-2026 为消防设施信息采集与远程监控提供标准化框架；高危单位应充分运用技防。",
+      "action": "按 GB/T 26875.10-2026 接入消防设施信息采集装置，实现运行状态远程监测与动态监管；高危单位优先部署电气火灾监测。"
+    },
+
+    {
+      "id": "R-HAZ-01", "dimension": "重大火灾隐患", "severity": "suggest", "type": "gap", "applies": ["all"],
+      "citation": "GB 35181-2025《重大火灾隐患判定规则》（替代2017版）", "citation_code": "GB35181-2025",
+      "detect": {"kind": "regex", "patterns": ["重大火灾隐患.*自查", "重大火灾隐患判定", "火灾隐患排查", "重大火灾隐患.*排查"]},
+      "evidence_text": "材料显示已开展重大火灾隐患自查/判定工作。",
+      "gap_text": "未找到重大火灾隐患自查的证据。建议参照 GB 35181-2025（现行有效，已替代2017版）开展重大火灾隐患判定。",
+      "action": "依据 GB 35181-2025 开展重大火灾隐患自查（直接判定与综合判定），发现直接判定要素须立即整改并报告。"
+    }
+  ]
+}
