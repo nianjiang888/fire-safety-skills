@@ -7,6 +7,24 @@
 ![Coverage](https://img.shields.io/badge/citation%20coverage-100%25-brightgreen.svg)
 ![Reproducible](https://img.shields.io/badge/reproducible-30%2F30-brightgreen.svg)
 
+## English Summary
+
+**FIre** is a collection of 10 self-contained AI agent skills for fire-safety management in social units (businesses, institutions, properties). The core principle is simple: **every conclusion must be verifiable.**
+
+The series spans four action types — inspect, calculate, answer, generate — and every rule is anchored to a citable regulation or standard. This is not a black-box generator: the engine is a pure rule system that produces identical output for identical input on any machine, with no network calls and no randomness.
+
+Highlights:
+- 10 skills, **0 runtime dependencies** (Python standard library only)
+- **217 rules / 312 citations** across 28 authoritative references, 100% citation coverage
+- **30/30** output vectors reproducible byte-for-byte
+- Each skill runs standalone; verification via `python _foundation/evidence/verify_all.py`
+
+Coverage includes fire-compliance checks, extinguisher configuration (GB 50140), hazard grading, regulation Q&A, emergency-plan generation, and training-course generation.
+
+> Full documentation in Chinese below.
+
+---
+
 一套面向社会单位消防管理的 AI 技能集合。核心主张只有一句：**每一条结论都能被查证。**
 
 系列共 10 个技能包，覆盖"查—算—答—写"四类动作。全部免费，全部自包含（包内即可跑通），全部规则挂载可核验的法规/标准出处。
