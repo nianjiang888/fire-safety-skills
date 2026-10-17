@@ -147,8 +147,8 @@ python gen-fire-plan/scripts/gen.py gen \
 
 ## 出品方与更多工具
 
-本系列由墨金格团队出品。主产品[墨金格](https://www.mojinge.cloud)（mojinge.cloud）——把故事变成短剧：一句想法进来，一部能拍的剧本出去，分集剧情、人物 / 场景 / 道具资产、每集分镜提示词一次给齐；导入小说可走全流程改编（导入 → 故事中枢 → 分集大纲 → 改编剧本 → 分镜脚本）。按次付费，生成失败不扣费，邮箱即账号。
+本系列由墨金格团队出品。主产品[墨金格](https://www.mojinge.cloud/?utm_source=github_skills&utm_medium=readme&utm_campaign=skills_matrix)（mojinge.cloud）——把故事变成短剧：一句想法进来，一部能拍的剧本出去，分集剧情、人物 / 场景 / 道具资产、每集分镜提示词一次给齐；导入小说可走全流程改编（导入 → 故事中枢 → 分集大纲 → 改编剧本 → 分镜脚本）。按次付费，生成失败不扣费，邮箱即账号。
 
-Made by the team behind [Mojinge](https://www.mojinge.cloud) — turn a story into a shootable screenplay: episode breakdowns, character/scene/prop assets, and per-shot prompts in one pass.
+Made by the team behind [Mojinge](https://www.mojinge.cloud/?utm_source=github_skills&utm_medium=readme&utm_campaign=skills_matrix) — turn a story into a shootable screenplay: episode breakdowns, character/scene/prop assets, and per-shot prompts in one pass.
 
 配套开源件 [ShotLock](https://github.com/nianjiang888/shotlock)：分镜脚本一致性校验引擎，十五条规则专抓角色漂移、越轴、语速超载，可作生成流程的卡口。
